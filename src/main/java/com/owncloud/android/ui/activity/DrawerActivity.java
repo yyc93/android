@@ -758,8 +758,8 @@ public abstract class DrawerActivity extends ToolbarActivity implements DisplayU
             View currentAccountView = findNavigationViewChildById(R.id.drawer_current_account);
             currentAccountView.setTag(account.name);
 
-            DisplayUtils.setAvatar(account, this,
-                    mCurrentAccountAvatarRadiusDimension, getResources(), getStorageManager(), currentAccountView);
+            DisplayUtils.setAvatar(account, this, mCurrentAccountAvatarRadiusDimension, getResources(),
+                    getStorageManager(), currentAccountView);
 
             // check and show quota info if available
             getAndDisplayUserQuota();
