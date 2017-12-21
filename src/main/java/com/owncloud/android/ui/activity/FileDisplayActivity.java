@@ -60,6 +60,7 @@ import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.getbase.floatingactionbutton.AddFloatingActionButton;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.FileDataStorageManager;
@@ -596,6 +597,17 @@ public class FileDisplayActivity extends HookActivity
         OCFileListFragment fileListFragment = getListOfFilesFragment();
         if (fileListFragment != null) {
             fileListFragment.listDirectory(MainApp.isOnlyOnDevice(), fromSearch);
+
+            AddFloatingActionButton addButton = fileListFragment.getFabMain().getAddButton();
+            addButton.setColorNormal(ThemeUtils.primaryColor());
+            addButton.setColorPressed(ThemeUtils.primaryDarkColor());
+            addButton.setPlusColor(ThemeUtils.fontColor());
+
+            ThemeUtils.tintFloatingActionButton(fileListFragment.getFabUpload(), R.drawable.ic_action_upload);
+            ThemeUtils.tintFloatingActionButton(fileListFragment.getFabMkdir(), R.drawable.ic_action_create_dir);
+            ThemeUtils.tintFloatingActionButton(fileListFragment.getFabUploadFromApp(), R.drawable.ic_import);
+
+            setupToolbar();
         }
     }
 
@@ -677,10 +689,10 @@ public class FileDisplayActivity extends HookActivity
 
         // hacky as no default way is provided
         int fontColor = ThemeUtils.fontColor();
-        EditText editText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        EditText editText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         editText.setHintTextColor(fontColor);
         editText.setTextColor(fontColor);
-        ImageView searchClose = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        ImageView searchClose = searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
         searchClose.setColorFilter(ThemeUtils.fontColor());
 
         // populate list of menu items to show/hide when drawer is opened/closed
@@ -1005,7 +1017,7 @@ public class FileDisplayActivity extends HookActivity
 
     private void revertBottomNavigationBarToAllFiles() {
         if (getResources().getBoolean(R.bool.bottom_toolbar_enabled)) {
-            BottomNavigationView bottomNavigationView = (BottomNavigationView) getListOfFilesFragment().getView()
+            BottomNavigationView bottomNavigationView = getListOfFilesFragment().getView()
                     .findViewById(R.id.bottom_navigation_view);
             if (bottomNavigationView.getMenu().findItem(R.id.nav_bar_settings).isChecked()) {
                 bottomNavigationView.getMenu().findItem(R.id.nav_bar_files).setChecked(true);
