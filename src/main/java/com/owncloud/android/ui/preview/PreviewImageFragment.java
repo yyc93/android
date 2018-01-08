@@ -60,7 +60,6 @@ import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.files.FileMenuFilter;
 import com.owncloud.android.lib.common.utils.Log_OC;
-import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.ui.dialog.ConfirmationDialogFragment;
 import com.owncloud.android.ui.dialog.RemoveFilesDialogFragment;
 import com.owncloud.android.ui.fragment.FileFragment;
@@ -180,7 +179,7 @@ public class PreviewImageFragment extends FileFragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.preview_image_fragment, container, false);
-        mImageView = (TouchImageViewCustom) view.findViewById(R.id.image);
+        mImageView = view.findViewById(R.id.image);
         mImageView.setPreviewImageFragment(this);
         mImageView.setVisibility(View.GONE);
 
@@ -200,7 +199,7 @@ public class PreviewImageFragment extends FileFragment {
             }
         });
 
-        mMultiView = (RelativeLayout) view.findViewById(R.id.multi_view);
+        mMultiView = view.findViewById(R.id.multi_view);
 
         setupMultiView(view);
         setMultiListLoadingMessage();
@@ -217,11 +216,11 @@ public class PreviewImageFragment extends FileFragment {
     }
 
     protected void setupMultiView(View view) {
-        mMultiListContainer = (LinearLayout) view.findViewById(R.id.empty_list_view);
-        mMultiListMessage = (TextView) view.findViewById(R.id.empty_list_view_text);
-        mMultiListHeadline = (TextView) view.findViewById(R.id.empty_list_view_headline);
-        mMultiListIcon = (ImageView) view.findViewById(R.id.empty_list_icon);
-        mMultiListProgress = (ProgressBar) view.findViewById(R.id.empty_list_progress);
+        mMultiListContainer = view.findViewById(R.id.empty_list_view);
+        mMultiListMessage = view.findViewById(R.id.empty_list_view_text);
+        mMultiListHeadline = view.findViewById(R.id.empty_list_view_headline);
+        mMultiListIcon = view.findViewById(R.id.empty_list_icon);
+        mMultiListProgress = view.findViewById(R.id.empty_list_progress);
     }
 
     /**
@@ -422,8 +421,7 @@ public class PreviewImageFragment extends FileFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_send_share_file:
-                mContainerActivity.getFileOperationsHelper().sendShareFile(getFile(),
-                        (FileDisplayActivity) mContainerActivity);
+                mContainerActivity.getFileOperationsHelper().sendShareFile(getFile());
                 return true;
 
             case R.id.action_open_file_with:

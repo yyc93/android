@@ -129,7 +129,8 @@ import static com.owncloud.android.db.PreferenceManager.getSortOrder;
 
 public class FileDisplayActivity extends HookActivity
         implements FileFragment.ContainerActivity,
-        OnEnforceableRefreshListener, SortingOrderDialogFragment.OnSortingOrderListener {
+        OnEnforceableRefreshListener, SortingOrderDialogFragment.OnSortingOrderListener,
+        SendShareDialog.SendShareDialogDownloader {
  
     private SyncBroadcastReceiver mSyncBroadcastReceiver;
     private UploadFinishReceiver mUploadFinishReceiver;
@@ -678,10 +679,10 @@ public class FileDisplayActivity extends HookActivity
 
         // hacky as no default way is provided
         int fontColor = ThemeUtils.fontColor();
-        EditText editText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        EditText editText = searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
         editText.setHintTextColor(fontColor);
         editText.setTextColor(fontColor);
-        ImageView searchClose = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+        ImageView searchClose = searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
         searchClose.setColorFilter(ThemeUtils.fontColor());
 
         // populate list of menu items to show/hide when drawer is opened/closed
@@ -1006,7 +1007,7 @@ public class FileDisplayActivity extends HookActivity
 
     private void revertBottomNavigationBarToAllFiles() {
         if (getResources().getBoolean(R.bool.bottom_toolbar_enabled)) {
-            BottomNavigationView bottomNavigationView = (BottomNavigationView) getListOfFilesFragment().getView()
+            BottomNavigationView bottomNavigationView = getListOfFilesFragment().getView()
                     .findViewById(R.id.bottom_navigation_view);
             if (bottomNavigationView.getMenu().findItem(R.id.nav_bar_settings).isChecked()) {
                 bottomNavigationView.getMenu().findItem(R.id.nav_bar_files).setChecked(true);
@@ -1193,6 +1194,11 @@ public class FileDisplayActivity extends HookActivity
                 sortByName(true);
                 break;
         }
+    }
+
+    @Override
+    public void downloadFile(OCFile file, String packageName, String activityName) {
+        startDownloadForSending(file, OCFileListFragment.DOWNLOAD_SEND, packageName, activityName);
     }
 
     private class SyncBroadcastReceiver extends BroadcastReceiver {

@@ -153,10 +153,10 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
         
         if (mLayout == R.layout.file_details_fragment) {
             int accentColor = ThemeUtils.primaryAccentColor();
-            SwitchCompat favoriteToggle = (SwitchCompat) mView.findViewById(R.id.fdFavorite);
+            SwitchCompat favoriteToggle = mView.findViewById(R.id.fdFavorite);
             favoriteToggle.setOnCheckedChangeListener(this);
             ThemeUtils.tintSwitch(favoriteToggle, accentColor, false);
-            ProgressBar progressBar = (ProgressBar)mView.findViewById(R.id.fdProgressBar);
+            ProgressBar progressBar = mView.findViewById(R.id.fdProgressBar);
             ThemeUtils.colorHorizontalProgressBar(progressBar, ThemeUtils.primaryAccentColor());
             mProgressListener = new ProgressListener(progressBar);
             mView.findViewById(R.id.fdCancelBtn).setOnClickListener(this);
@@ -312,8 +312,7 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_send_share_file: {
-                mContainerActivity.getFileOperationsHelper().sendShareFile(getFile(),
-                        (FileDisplayActivity) mContainerActivity);
+                mContainerActivity.getFileOperationsHelper().sendShareFile(getFile());
                 return true;
             }
             case R.id.action_open_file_with: {
@@ -359,7 +358,7 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        SwitchCompat favSwitch = (SwitchCompat) getView().findViewById(R.id.fdFavorite);
+        SwitchCompat favSwitch = getView().findViewById(R.id.fdFavorite);
         mContainerActivity.getFileOperationsHelper().toggleOfflineFile(getFile(), favSwitch.isChecked());
     }
 
@@ -408,8 +407,8 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
             setFilesize(file.getFileLength());
 
             setTimeModified(file.getModificationTimestamp());
-            
-            SwitchCompat favSwitch = (SwitchCompat) getView().findViewById(R.id.fdFavorite);
+
+            SwitchCompat favSwitch = getView().findViewById(R.id.fdFavorite);
             favSwitch.setChecked(file.isAvailableOffline());
 
             setShareByLinkInfo(file.isSharedViaLink());
@@ -454,7 +453,7 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
      * @param filename to set
      */
     private void setFilename(String filename) {
-        TextView tv = (TextView) getView().findViewById(R.id.fdFilename);
+        TextView tv = getView().findViewById(R.id.fdFilename);
         if (tv != null) {
             tv.setText(filename);
         }
@@ -465,7 +464,7 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
      * @param file : An {@link OCFile}
      */
     private void setFiletype(OCFile file) {
-        ImageView iv = (ImageView) getView().findViewById(R.id.fdIcon);
+        ImageView iv = getView().findViewById(R.id.fdIcon);
 
         if (iv != null) {
             iv.setTag(file.getFileId());
@@ -512,7 +511,7 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
      * @param fileSize in bytes to set
      */
     private void setFilesize(long fileSize) {
-        TextView tv = (TextView) getView().findViewById(R.id.fdSize);
+        TextView tv = getView().findViewById(R.id.fdSize);
         if (tv != null) {
             tv.setText(DisplayUtils.bytesToHumanReadable(fileSize));
         }
@@ -524,7 +523,7 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
      * @param milliseconds Unix time to set
      */
     private void setTimeModified(long milliseconds) {
-        TextView tv = (TextView) getView().findViewById(R.id.fdModified);
+        TextView tv = getView().findViewById(R.id.fdModified);
         if (tv != null) {
             tv.setText(DisplayUtils.unixTimeToHumanReadable(milliseconds));
         }
@@ -536,12 +535,12 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
      * @param isShareByLink flag is share by link is enable
      */
     private void setShareByLinkInfo(boolean isShareByLink) {
-        TextView tv = (TextView) getView().findViewById(R.id.fdSharebyLink);
+        TextView tv = getView().findViewById(R.id.fdSharebyLink);
         if (tv != null) {
             tv.setText(isShareByLink ? R.string.filedetails_share_link_enable :
                     R.string.filedetails_share_link_disable);
         }
-        ImageView linkIcon = (ImageView) getView().findViewById(R.id.fdShareLinkIcon);
+        ImageView linkIcon = getView().findViewById(R.id.fdShareLinkIcon);
         if (linkIcon != null) {
             linkIcon.setVisibility(isShareByLink ? View.VISIBLE : View.GONE);
         }
@@ -572,10 +571,10 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
         );
 
         // Show data
-        ListView usersList = (ListView) getView().findViewById(R.id.fdshareUsersList);
+        ListView usersList = getView().findViewById(R.id.fdshareUsersList);
 
         // No data
-        TextView noList = (TextView) getView().findViewById(R.id.fdShareNoUsers);
+        TextView noList = getView().findViewById(R.id.fdShareNoUsers);
 
         if (mShares.size() > 0) {
             usersList.setVisibility(View.VISIBLE);
@@ -624,7 +623,7 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
             
             // show the progress bar for the transfer
             getView().findViewById(R.id.fdProgressBlock).setVisibility(View.VISIBLE);
-            TextView progressText = (TextView) getView().findViewById(R.id.fdProgressText);
+            TextView progressText = getView().findViewById(R.id.fdProgressText);
             progressText.setVisibility(View.VISIBLE);
             FileDownloaderBinder downloaderBinder = mContainerActivity.getFileDownloaderBinder();
             FileUploaderBinder uploaderBinder = mContainerActivity.getFileUploaderBinder();
@@ -649,7 +648,7 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
             
             // hides the progress bar
             getView().findViewById(R.id.fdProgressBlock).setVisibility(View.GONE);
-            TextView progressText = (TextView) getView().findViewById(R.id.fdProgressText);
+            TextView progressText = getView().findViewById(R.id.fdProgressText);
             progressText.setVisibility(View.GONE);
         }
     }
@@ -663,7 +662,7 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
             
             // hides the progress bar
             getView().findViewById(R.id.fdProgressBlock).setVisibility(View.GONE);
-            TextView progressText = (TextView) getView().findViewById(R.id.fdProgressText);
+            TextView progressText = getView().findViewById(R.id.fdProgressText);
             progressText.setVisibility(View.GONE);
         }
     }

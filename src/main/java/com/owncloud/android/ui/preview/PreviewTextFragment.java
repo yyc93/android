@@ -103,9 +103,9 @@ public class PreviewTextFragment extends FileFragment {
 
         View ret = inflater.inflate(R.layout.text_file_preview, container, false);
 
-        mTextPreview = (TextView) ret.findViewById(R.id.text_preview);
+        mTextPreview = ret.findViewById(R.id.text_preview);
 
-        mMultiView = (RelativeLayout) ret.findViewById(R.id.multi_view);
+        mMultiView = ret.findViewById(R.id.multi_view);
 
         setupMultiView(ret);
         setMultiListLoadingMessage();
@@ -114,11 +114,11 @@ public class PreviewTextFragment extends FileFragment {
     }
 
     protected void setupMultiView(View view) {
-        mMultiListContainer = (LinearLayout) view.findViewById(R.id.empty_list_view);
-        mMultiListMessage = (TextView) view.findViewById(R.id.empty_list_view_text);
-        mMultiListHeadline = (TextView) view.findViewById(R.id.empty_list_view_headline);
-        mMultiListIcon = (ImageView) view.findViewById(R.id.empty_list_icon);
-        mMultiListProgress = (ProgressBar) view.findViewById(R.id.empty_list_progress);
+        mMultiListContainer = view.findViewById(R.id.empty_list_view);
+        mMultiListMessage = view.findViewById(R.id.empty_list_view_text);
+        mMultiListHeadline = view.findViewById(R.id.empty_list_view_headline);
+        mMultiListIcon = view.findViewById(R.id.empty_list_icon);
+        mMultiListProgress = view.findViewById(R.id.empty_list_progress);
     }
 
     private void setMultiListLoadingMessage() {
@@ -382,8 +382,7 @@ public class PreviewTextFragment extends FileFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_send_share_file: {
-                mContainerActivity.getFileOperationsHelper().sendShareFile(getFile(),
-                        (FileDisplayActivity) mContainerActivity);
+                mContainerActivity.getFileOperationsHelper().sendShareFile(getFile());
                 return true;
             }
             case R.id.action_open_file_with: {
